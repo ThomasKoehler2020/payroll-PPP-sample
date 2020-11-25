@@ -1,7 +1,7 @@
 namespace Payroll
 {
-	public interface PaymentMethod
-	{
-		void Pay(Paycheck paycheck);
-	}
+    public interface PaymentMethod
+    {
+        void Pay(Paycheck paycheck);
+    }
 }

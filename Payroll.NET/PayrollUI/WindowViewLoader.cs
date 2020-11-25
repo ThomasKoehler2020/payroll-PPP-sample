@@ -3,50 +3,46 @@ using Payroll;
 
 namespace PayrollUI
 {
-	public class WindowViewLoader : ViewLoader
-	{
-		private readonly PayrollDatabase database;
-		private Form lastLoadedView;
+    public class WindowViewLoader : ViewLoader
+    {
+        private readonly PayrollDatabase database;
 
-		public WindowViewLoader(PayrollDatabase database)
-		{
-			this.database = database;
-		}
+        public Form LastLoadedView { get; private set; }
 
-		public void LoadPayrollView()
-		{
-			PayrollWindow view = new PayrollWindow();
-			PayrollPresenter presenter = 
-				new PayrollPresenter(database, this);
+        public WindowViewLoader(PayrollDatabase database)
+        {
+            this.database = database;
+        }
 
-			view.Presenter = presenter;
-			presenter.View = view;
+        public void LoadPayrollView()
+        {
+            var view = new PayrollWindow();
+            var presenter =
+                new PayrollPresenter(database, this);
 
-			LoadView(view);
-		}
+            view.Presenter = presenter;
+            presenter.View = view;
 
-		public void LoadAddEmployeeView(
-			TransactionContainer transactionContainer)
-		{
-			AddEmployeeWindow view = new AddEmployeeWindow();
-			AddEmployeePresenter presenter = 
-				new AddEmployeePresenter(view, 
-				transactionContainer, database);
+            LoadView(view);
+        }
 
-			view.Presenter = presenter;
+        public void LoadAddEmployeeView(
+            TransactionContainer transactionContainer)
+        {
+            var view = new AddEmployeeWindow();
+            var presenter =
+                new AddEmployeePresenter(view,
+                    transactionContainer, database);
 
-			LoadView(view);
-		}
+            view.Presenter = presenter;
 
-		private void LoadView(Form view)
-		{
-			view.Show();
-			lastLoadedView = view;
-		}
+            LoadView(view);
+        }
 
-		public Form LastLoadedView
-		{
-			get { return lastLoadedView; }
-		}
-	}
+        private void LoadView(Form view)
+        {
+            view.Show();
+            LastLoadedView = view;
+        }
+    }
 }

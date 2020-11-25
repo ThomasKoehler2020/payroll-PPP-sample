@@ -2,25 +2,16 @@ using System;
 
 namespace Payroll
 {
-	public class SalesReceipt
-	{
-		private readonly DateTime date;
-		private readonly double saleAmount;
+    public class SalesReceipt
+    {
+        public DateTime Date { get; }
 
-		public SalesReceipt(DateTime date, double amount)
-		{
-			this.date = date;
-			this.saleAmount = amount;
-		}
+        public double SaleAmount { get; }
 
-		public DateTime Date
-		{
-			get { return date; }
-		}
-
-		public double SaleAmount
-		{
-			get { return saleAmount; }
-		}
-	}
+        public SalesReceipt(DateTime date, double amount)
+        {
+            this.Date = date;
+            SaleAmount = amount;
+        }
+    }
 }

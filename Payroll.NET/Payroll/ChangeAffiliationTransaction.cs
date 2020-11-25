@@ -1,19 +1,21 @@
 namespace Payroll
 {
-	public abstract class ChangeAffiliationTransaction : ChangeEmployeeTransaction
-	{
-		public ChangeAffiliationTransaction(int empId, PayrollDatabase database)
-			: base(empId, database)
-		{}
+    public abstract class ChangeAffiliationTransaction : ChangeEmployeeTransaction
+    {
+        protected abstract Affiliation Affiliation { get; }
 
-		protected override void Change(Employee e)
-		{
-			RecordMembership(e);
-			Affiliation affiliation = Affiliation;
-			e.Affiliation = affiliation;
-		}
+        public ChangeAffiliationTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
+        {
+        }
 
-		protected abstract Affiliation Affiliation { get; }
-		protected abstract void RecordMembership(Employee e);
-	}
+        protected override void Change(Employee e)
+        {
+            RecordMembership(e);
+            var affiliation = Affiliation;
+            e.Affiliation = affiliation;
+        }
+
+        protected abstract void RecordMembership(Employee e);
+    }
 }

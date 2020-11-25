@@ -2,17 +2,18 @@ using Payroll;
 
 namespace PayrollUI
 {
-	public class MockTransaction : Transaction
-	{
-		public bool wasExecuted;
+    public class MockTransaction : Transaction
+    {
+        public bool wasExecuted;
 
-		public MockTransaction()
-			: base(null)
-		{}
+        public MockTransaction()
+            : base(null)
+        {
+        }
 
-		public override void Execute()
-		{
-			wasExecuted = true;
-		}
-	}
+        public override void Execute()
+        {
+            wasExecuted = true;
+        }
+    }
 }

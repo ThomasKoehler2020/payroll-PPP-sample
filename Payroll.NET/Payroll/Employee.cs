@@ -3,94 +3,60 @@ using System.Text;
 
 namespace Payroll
 {
-	public class Employee
-	{
-		private readonly int empid;
-		private string name;
-		private readonly string address;
-		private PaymentClassification classification;
-		private PaymentSchedule schedule;	
-		private PaymentMethod method;
-		private Affiliation affiliation = new NoAffiliation();
+    public class Employee
+    {
+        public string Name { get; set; }
 
-		public Employee(int empid, string name, string address)
-		{
-			this.empid = empid;
-			this.name = name;
-			this.address = address;
-		}
+        public string Address { get; }
 
-		public string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
+        public PaymentClassification Classification { get; set; }
 
-		public string Address
-		{
-			get { return address; }
-		}
+        public PaymentSchedule Schedule { get; set; }
 
-		public PaymentClassification Classification
-		{
-			get { return classification; }
-			set { classification = value; }
-		}
+        public PaymentMethod Method { get; set; }
 
-		public PaymentSchedule Schedule
-		{
-			get { return schedule; }
-			set { schedule = value; }
-		}
+        public Affiliation Affiliation { get; set; } = new NoAffiliation();
 
-		public PaymentMethod Method
-		{
-			get { return method; }
-			set { method = value; }
-		}
+        public int EmpId { get; }
 
-		public Affiliation Affiliation
-		{
-			get { return affiliation; }
-			set { affiliation = value; }
-		}
+        public Employee(int empid, string name, string address)
+        {
+            this.EmpId = empid;
+            this.Name = name;
+            this.Address = address;
+        }
 
-		public bool IsPayDate(DateTime date)
-		{
-			return schedule.IsPayDate(date);
-		}
+        public bool IsPayDate(DateTime date)
+        {
+            return Schedule.IsPayDate(date);
+        }
 
-		public void Payday(Paycheck paycheck)
-		{
-			double grossPay = classification.CalculatePay(paycheck);
-			double deductions = affiliation.CalculateDeductions(paycheck);
-			double netPay = grossPay - deductions;
-			paycheck.GrossPay = grossPay;
-			paycheck.Deductions = deductions;
-			paycheck.NetPay = netPay;
-			method.Pay(paycheck);
-		}
+        public void Payday(Paycheck paycheck)
+        {
+            var grossPay = Classification.CalculatePay(paycheck);
+            var deductions = Affiliation.CalculateDeductions(paycheck);
+            var netPay = grossPay - deductions;
+            paycheck.GrossPay = grossPay;
+            paycheck.Deductions = deductions;
+            paycheck.NetPay = netPay;
+            Method.Pay(paycheck);
+        }
 
-		public DateTime GetPayPeriodStartDate(DateTime date)
-		{
-			return schedule.GetPayPeriodStartDate(date);
-		}
+        public DateTime GetPayPeriodStartDate(DateTime date)
+        {
+            return Schedule.GetPayPeriodStartDate(date);
+        }
 
-		public int EmpId
-		{
-			get { return empid; }
-		}
-
-		public override string ToString()
-		{
-			StringBuilder builder = new StringBuilder();
-			builder.Append("Emp#: ").Append(empid).Append("   ");
-			builder.Append(name).Append("   ");
-			builder.Append(address).Append("   ");
-			builder.Append("Paid ").Append(classification).Append(" ");
-			builder.Append(schedule);
-			builder.Append(" by ").Append(method);
-			return builder.ToString();
-		}
-	}
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.Append("Emp#: ").Append(EmpId).Append("   ");
+            builder.Append(Name).Append("   ");
+            builder.Append(Address).Append("   ");
+            builder.Append("Paid ").Append(Classification).Append(" ");
+            builder.Append(Schedule);
+            builder.Append(" by ").Append(Method);
+            return builder.ToString();
+        }
+    }
 }

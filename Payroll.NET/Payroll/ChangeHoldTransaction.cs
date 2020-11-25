@@ -1,16 +1,12 @@
 namespace Payroll
 {
-	public class ChangeHoldTransaction : ChangeMethodTransaction
-	{
-		public ChangeHoldTransaction(int empId, PayrollDatabase database)
-			: base(empId, database)
-		{
-		}
+    public class ChangeHoldTransaction : ChangeMethodTransaction
+    {
+        protected override PaymentMethod Method => new HoldMethod();
 
-		protected override PaymentMethod Method
-		{
-			get { return new HoldMethod(); }
-		}
-
-	}
+        public ChangeHoldTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
+        {
+        }
+    }
 }

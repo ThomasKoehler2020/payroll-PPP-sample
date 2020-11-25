@@ -3,129 +3,129 @@ using Payroll;
 
 namespace PayrollUI
 {
-	[TestFixture]
-	public class AddEmployeePresenterTest
-	{
-		private AddEmployeePresenter presenter;
-		private TransactionContainer container;
-		private InMemoryPayrollDatabase database;
-		private MockAddEmployeeView view;
+    [TestFixture]
+    public class AddEmployeePresenterTest
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            view = new MockAddEmployeeView();
+            container = new TransactionContainer(null);
+            database = new InMemoryPayrollDatabase();
+            presenter = new AddEmployeePresenter(
+                view, container, database);
+        }
 
-		[SetUp]
-		public void SetUp()
-		{
-			view = new MockAddEmployeeView();
-			container = new TransactionContainer(null);
-			database = new InMemoryPayrollDatabase();
-			presenter = new AddEmployeePresenter(
-				view, container, database);
-		}
+        private AddEmployeePresenter presenter;
+        private TransactionContainer container;
+        private InMemoryPayrollDatabase database;
+        private MockAddEmployeeView view;
 
-		[Test]
-		public void Creation()
-		{
-			Assert.AreSame(container, 
-				presenter.TransactionContainer);
-		}
+        private void CheckSubmitEnabled(bool expected, int count)
+        {
+            Assert.AreEqual(expected, view.submitEnabled);
+            Assert.AreEqual(count, view.submitEnabledCount);
+            view.submitEnabled = false;
+        }
 
-		[Test]
-		public void AllInfoIsCollected()
-		{
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.EmpId = 1;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.Name = "Bill";
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.Address = "123 abc";
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.IsHourly = true;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.HourlyRate = 1.23;
-			Assert.IsTrue(presenter.AllInformationIsCollected());
+        [Test]
+        public void AddEmployee()
+        {
+            presenter.EmpId = 123;
+            presenter.Name = "Joe";
+            presenter.Address = "314 Elm";
+            presenter.IsHourly = true;
+            presenter.HourlyRate = 25;
 
-			presenter.IsHourly = false;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.IsSalary = true;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.Salary = 1234;
-			Assert.IsTrue(presenter.AllInformationIsCollected());
+            presenter.AddEmployee();
 
-			presenter.IsSalary = false;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.IsCommission = true;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.CommissionSalary = 123;
-			Assert.IsFalse(presenter.AllInformationIsCollected());
-			presenter.Commission = 12;
-			Assert.IsTrue(presenter.AllInformationIsCollected());
-		}
+            Assert.AreEqual(1, container.Transactions.Count);
+            Assert.IsTrue(container.Transactions[0]
+                is AddHourlyEmployee);
+        }
 
-		[Test]
-		public void ViewGetsUpdated()
-		{
-			presenter.EmpId = 1;
-			CheckSubmitEnabled(false, 1);
+        [Test]
+        public void AllInfoIsCollected()
+        {
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.EmpId = 1;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.Name = "Bill";
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.Address = "123 abc";
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.IsHourly = true;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.HourlyRate = 1.23;
+            Assert.IsTrue(presenter.AllInformationIsCollected());
 
-			presenter.Name = "Bill";
-			CheckSubmitEnabled(false, 2);
+            presenter.IsHourly = false;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.IsSalary = true;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.Salary = 1234;
+            Assert.IsTrue(presenter.AllInformationIsCollected());
 
-			presenter.Address = "123 abc";
-			CheckSubmitEnabled(false, 3);
+            presenter.IsSalary = false;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.IsCommission = true;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.CommissionSalary = 123;
+            Assert.IsFalse(presenter.AllInformationIsCollected());
+            presenter.Commission = 12;
+            Assert.IsTrue(presenter.AllInformationIsCollected());
+        }
 
-			presenter.IsHourly = true;
-			CheckSubmitEnabled(false, 4);
+        [Test]
+        public void CreatingTransaction()
+        {
+            presenter.EmpId = 123;
+            presenter.Name = "Joe";
+            presenter.Address = "314 Elm";
 
-			presenter.HourlyRate = 1.23;
-			CheckSubmitEnabled(true, 5);
-		}
+            presenter.IsHourly = true;
+            presenter.HourlyRate = 10;
+            Assert.IsTrue(presenter.CreateTransaction()
+                is AddHourlyEmployee);
 
-		private void CheckSubmitEnabled(bool expected, int count)
-		{
-			Assert.AreEqual(expected, view.submitEnabled);
-			Assert.AreEqual(count, view.submitEnabledCount);
-			view.submitEnabled = false;
-		}
+            presenter.IsHourly = false;
+            presenter.IsSalary = true;
+            presenter.Salary = 3000;
+            Assert.IsTrue(presenter.CreateTransaction()
+                is AddSalariedEmployee);
 
-		[Test]
-		public void CreatingTransaction()
-		{
-			presenter.EmpId = 123;
-			presenter.Name = "Joe";
-			presenter.Address = "314 Elm";
+            presenter.IsSalary = false;
+            presenter.IsCommission = true;
+            presenter.CommissionSalary = 1000;
+            presenter.Commission = 25;
+            Assert.IsTrue(presenter.CreateTransaction()
+                is AddCommissionedEmployee);
+        }
 
-			presenter.IsHourly = true;
-			presenter.HourlyRate = 10;
-			Assert.IsTrue(presenter.CreateTransaction()
-				is AddHourlyEmployee);
+        [Test]
+        public void Creation()
+        {
+            Assert.AreSame(container,
+                presenter.TransactionContainer);
+        }
 
-			presenter.IsHourly = false;
-			presenter.IsSalary = true;
-			presenter.Salary = 3000;
-			Assert.IsTrue(presenter.CreateTransaction()
-				is AddSalariedEmployee);
+        [Test]
+        public void ViewGetsUpdated()
+        {
+            presenter.EmpId = 1;
+            CheckSubmitEnabled(false, 1);
 
-			presenter.IsSalary = false;
-			presenter.IsCommission = true;
-			presenter.CommissionSalary = 1000;
-			presenter.Commission = 25;
-			Assert.IsTrue(presenter.CreateTransaction()
-				is AddCommissionedEmployee);
-		}
+            presenter.Name = "Bill";
+            CheckSubmitEnabled(false, 2);
 
-		[Test]
-		public void AddEmployee()
-		{
-			presenter.EmpId = 123;
-			presenter.Name = "Joe";
-			presenter.Address = "314 Elm";
-			presenter.IsHourly = true;
-			presenter.HourlyRate = 25;
+            presenter.Address = "123 abc";
+            CheckSubmitEnabled(false, 3);
 
-			presenter.AddEmployee();
+            presenter.IsHourly = true;
+            CheckSubmitEnabled(false, 4);
 
-			Assert.AreEqual(1, container.Transactions.Count);
-			Assert.IsTrue(container.Transactions[0]
-				is AddHourlyEmployee);
-		}
-	}
+            presenter.HourlyRate = 1.23;
+            CheckSubmitEnabled(true, 5);
+        }
+    }
 }

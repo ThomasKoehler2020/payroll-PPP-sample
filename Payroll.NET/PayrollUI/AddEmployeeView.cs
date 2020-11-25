@@ -1,7 +1,7 @@
 namespace PayrollUI
 {
-	public interface AddEmployeeView
-	{
-		bool SubmitEnabled { set; }
-	}
+    public interface AddEmployeeView
+    {
+        bool SubmitEnabled { set; }
+    }
 }

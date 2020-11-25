@@ -1,36 +1,25 @@
-using System;
-
 namespace Payroll
 {
-	public class DirectDepositMethod : PaymentMethod
-	{
-		private readonly string bank;
-		private readonly string accountNumber;
+    public class DirectDepositMethod : PaymentMethod
+    {
+        public string Bank { get; }
 
-		public DirectDepositMethod(string bank, string accountNumber)
-		{
-			this.bank = bank;
-			this.accountNumber = accountNumber;
-		}
+        public string AccountNumber { get; }
 
-		public void Pay(Paycheck paycheck)
-		{
-			paycheck.SetField("Disposition", "Direct");
-		}
+        public DirectDepositMethod(string bank, string accountNumber)
+        {
+            this.Bank = bank;
+            this.AccountNumber = accountNumber;
+        }
 
-		public string Bank
-		{
-			get { return bank; }
-		}
+        public void Pay(Paycheck paycheck)
+        {
+            paycheck.SetField("Disposition", "Direct");
+        }
 
-		public string AccountNumber
-		{
-			get { return accountNumber; }
-		}
-
-		public override string ToString()
-		{
-			return String.Format("direct deposit into {0}:{1}", bank, accountNumber);
-		}
-	}
+        public override string ToString()
+        {
+            return string.Format("direct deposit into {0}:{1}", Bank, AccountNumber);
+        }
+    }
 }

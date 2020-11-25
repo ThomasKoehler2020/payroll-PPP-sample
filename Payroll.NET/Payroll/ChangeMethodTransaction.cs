@@ -1,17 +1,18 @@
 namespace Payroll
 {
-	public abstract class ChangeMethodTransaction : ChangeEmployeeTransaction
-	{
-		public ChangeMethodTransaction(int empId, PayrollDatabase database)
-			: base(empId, database)
-		{}
+    public abstract class ChangeMethodTransaction : ChangeEmployeeTransaction
+    {
+        protected abstract PaymentMethod Method { get; }
 
-		protected override void Change(Employee e)
-		{
-			PaymentMethod method = Method;
-			e.Method = method;
-		}
+        public ChangeMethodTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
+        {
+        }
 
-		protected abstract PaymentMethod Method { get; }
-	}
+        protected override void Change(Employee e)
+        {
+            var method = Method;
+            e.Method = method;
+        }
+    }
 }

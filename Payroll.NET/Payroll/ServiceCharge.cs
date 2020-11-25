@@ -2,26 +2,16 @@ using System;
 
 namespace Payroll
 {
-	public class ServiceCharge
-	{
-		private readonly DateTime time;
-		private readonly double amount;
+    public class ServiceCharge
+    {
+        public double Amount { get; }
 
-		public ServiceCharge(DateTime time, double amount)
-		{
-			this.time = time;
-			this.amount = amount;
-		}
+        public DateTime Time { get; }
 
-		public double Amount
-		{
-			get { return amount; }
-		}
-
-		public DateTime Time
-		{
-			get { return time; }
-		}
-
-	}
+        public ServiceCharge(DateTime time, double amount)
+        {
+            this.Time = time;
+            this.Amount = amount;
+        }
+    }
 }

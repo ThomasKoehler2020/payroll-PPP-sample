@@ -1,29 +1,22 @@
-using System;
-
 namespace Payroll
 {
-	public class MailMethod : PaymentMethod
-	{
-		private readonly string address;
+    public class MailMethod : PaymentMethod
+    {
+        public string Address { get; }
 
-		public MailMethod(string address)
-		{
-			this.address = address;
-		}
+        public MailMethod(string address)
+        {
+            this.Address = address;
+        }
 
-		public void Pay(Paycheck paycheck)
-		{
-			paycheck.SetField("Disposition", "Mail");
-		}
+        public void Pay(Paycheck paycheck)
+        {
+            paycheck.SetField("Disposition", "Mail");
+        }
 
-		public string Address
-		{
-			get { return address; }
-		}
-
-		public override string ToString()
-		{
-			return String.Format("mail ({0})", address);
-		}
-	}
+        public override string ToString()
+        {
+            return string.Format("mail ({0})", Address);
+        }
+    }
 }

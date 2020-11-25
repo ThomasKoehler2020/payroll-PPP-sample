@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\_Projects\Privat\payroll-PPP-sample\Payroll.NET" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Payroll" t="IncludeRecursive">
+        <e p="AddCommissionedEmployee.cs" t="Include" />
+        <e p="AddEmployeeTransaction.cs" t="Include" />
+        <e p="AddHourlyEmployee.cs" t="Include" />
+        <e p="AddSalariedEmployee.cs" t="Include" />
+        <e p="Affiliation.cs" t="Include" />
+        <e p="AssemblyInfo.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="BiWeeklySchedule.cs" t="Include" />
+        <e p="ChangeAffiliationTransaction.cs" t="Include" />
+        <e p="ChangeClassificationTransaction.cs" t="Include" />
+        <e p="ChangeCommissionedTransaction.cs" t="Include" />
+        <e p="ChangeDirectTransaction.cs" t="Include" />
+        <e p="ChangeEmployeeTransaction.cs" t="Include" />
+        <e p="ChangeHoldTransaction.cs" t="Include" />
+        <e p="ChangeHourlyTransaction.cs" t="Include" />
+        <e p="ChangeMailTransaction.cs" t="Include" />
+        <e p="ChangeMemberTransaction.cs" t="Include" />
+        <e p="ChangeMethodTransaction.cs" t="Include" />
+        <e p="ChangeNameTransaction.cs" t="Include" />
+        <e p="ChangeSalariedTransaction.cs" t="Include" />
+        <e p="ChangeUnaffiliatedTransaction.cs" t="Include" />
+        <e p="CommissionClassification.cs" t="Include" />
+        <e p="DateUtil.cs" t="Include" />
+        <e p="DeleteEmployeeTransaction.cs" t="Include" />
+        <e p="DirectDepositMethod.cs" t="Include" />
+        <e p="Employee.cs" t="Include" />
+        <e p="HoldMethod.cs" t="Include" />
+        <e p="HourlyClassification.cs" t="Include" />
+        <e p="InMemoryPayrollDatabase.cs" t="Include" />
+        <e p="MailMethod.cs" t="Include" />
+        <e p="MonthlySchedule.cs" t="Include" />
+        <e p="NoAffiliation.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Paycheck.cs" t="Include" />
+        <e p="PaydayTransaction.cs" t="Include" />
+        <e p="PaymentClassification.cs" t="Include" />
+        <e p="PaymentMethod.cs" t="Include" />
+        <e p="PaymentSchedule.cs" t="Include" />
+        <e p="Payroll.csproj" t="IncludeRecursive" />
+        <e p="PayrollDatabase.cs" t="Include" />
+        <e p="PayrollTest.cs" t="Include" />
+        <e p="SalariedClassification.cs" t="Include" />
+        <e p="SalesReceipt.cs" t="Include" />
+        <e p="SalesReceiptTransaction.cs" t="Include" />
+        <e p="ServiceCharge.cs" t="Include" />
+        <e p="ServiceChargeTransaction.cs" t="Include" />
+        <e p="TimeCard.cs" t="Include" />
+        <e p="TimeCardTransaction.cs" t="Include" />
+        <e p="Transaction.cs" t="Include" />
+        <e p="UnionAffiliation.cs" t="Include" />
+        <e p="WeeklySchedule.cs" t="Include" />
+      </e>
+      <e p="Payroll.NET.sln" t="IncludeFlat" />
+      <e p="PayrollDB" t="IncludeRecursive">
+        <e p="AssemblyInfo.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="LoadEmployeeOperation.cs" t="Include" />
+        <e p="LoadEmployeeOperationTest.cs" t="Include" />
+        <e p="LoadPaymentClassificationOperation.cs" t="Include" />
+        <e p="LoadPaymentClassificationOperationTest.cs" t="Include" />
+        <e p="LoadPaymentMethodOperation.cs" t="Include" />
+        <e p="LoadPaymentMethodOperationTest.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="PayrollDB.csproj" t="IncludeRecursive" />
+        <e p="SaveEmployeeOperation.cs" t="Include" />
+        <e p="SqlPayrollDatabase.cs" t="Include" />
+        <e p="SqlPayrollDatabaseTest.cs" t="Include" />
+      </e>
+      <e p="PayrollUI" t="IncludeRecursive">
+        <e p="AddEmployeePresenter.cs" t="Include" />
+        <e p="AddEmployeePresenterTest.cs" t="Include" />
+        <e p="AddEmployeeView.cs" t="Include" />
+        <e p="AddEmployeeWindow.cs" t="Include" />
+        <e p="AddEmployeeWindow.resx" t="Include" />
+        <e p="AddEmployeeWindowTest.cs" t="Include" />
+        <e p="app.config" t="Include" />
+        <e p="App.ico" t="Include" />
+        <e p="AssemblyInfo.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MockAddEmployeeView.cs" t="Include" />
+        <e p="MockPayrollPresenter.cs" t="Include" />
+        <e p="MockPayrollView.cs" t="Include" />
+        <e p="MockTransaction.cs" t="Include" />
+        <e p="MockViewLoader.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="PayrollMain.cs" t="Include" />
+        <e p="PayrollPresenter.cs" t="Include" />
+        <e p="PayrollPresenterTest.cs" t="Include" />
+        <e p="PayrollUI.csproj" t="IncludeRecursive" />
+        <e p="PayrollView.cs" t="Include" />
+        <e p="PayrollWindow.cs" t="Include" />
+        <e p="PayrollWindow.resx" t="Include" />
+        <e p="PayrollWindowTest.cs" t="Include" />
+        <e p="TransactionContainer.cs" t="Include" />
+        <e p="TransactionContainerTest.cs" t="Include" />
+        <e p="ViewLoader.cs" t="Include" />
+        <e p="WindowViewLoader.cs" t="Include" />
+        <e p="WindowViewLoaderTest.cs" t="Include" />
+      </e>
+    </e>
+    <e p="C:\Users\t.koehler\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\t.koehler\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Payroll.NET.-1524056085.00" t="ExcludeRecursive" />
+    <e p="C:\Users\t.koehler\AppData\Roaming\JetBrains\Rider2020.2\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\t.koehler\AppData\Roaming\JetBrains\Rider2020.2\extensions" t="IncludeRecursive" />
+  </component>
+</project>

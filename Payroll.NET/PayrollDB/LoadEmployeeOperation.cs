@@ -4,92 +4,93 @@ using Payroll;
 
 namespace PayrollDB
 {
-	public class LoadEmployeeOperation
-	{
-		private readonly int empId;
-		private readonly SqlConnection connection;
-		private Employee employee;
+    public class LoadEmployeeOperation
+    {
+        private readonly SqlConnection connection;
+        private readonly int empId;
 
-		public LoadEmployeeOperation(
-			int empId, SqlConnection connection)
-		{
-			this.empId = empId;
-			this.connection = connection;
-		}
+        public SqlCommand LoadEmployeeCommand
+        {
+            get
+            {
+                var sql = "select * from Employee " +
+                          "where EmpId=@EmpId";
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@EmpId", empId);
+                return command;
+            }
+        }
 
-		public SqlCommand LoadEmployeeCommand
-		{
-			get
-			{
-				string sql = "select * from Employee " +
-					"where EmpId=@EmpId";
-				SqlCommand command = new SqlCommand(sql, connection);
-				command.Parameters.Add("@EmpId", empId);
-				return command;
-			}
-		}
+        public Employee Employee { get; set; }
 
-		public void Execute()
-		{
-			string sql = "select *  from Employee where EmpId = @EmpId";
-			SqlCommand command = new SqlCommand(sql, connection);
-			command.Parameters.Add("@EmpId", empId);
+        public LoadEmployeeOperation(
+            int empId, SqlConnection connection)
+        {
+            this.empId = empId;
+            this.connection = connection;
+        }
 
-			DataRow row = LoadDataFromCommand(command);
+        public void Execute()
+        {
+            var sql = "select *  from Employee where EmpId = @EmpId";
+            var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@EmpId", empId);
 
-			CreateEmplyee(row);
-			AddSchedule(row);
-			AddPaymentMethod(row);
-			AddClassification(row);
-		}
+            var row = LoadDataFromCommand(command);
 
-		public void AddSchedule(DataRow row)
-		{
-			string scheduleType = row["ScheduleType"].ToString();
-			if(scheduleType.Equals("weekly"))
-				employee.Schedule = new WeeklySchedule();
-			else if(scheduleType.Equals("biweekly"))
-				employee.Schedule = new BiWeeklySchedule();
-			else if(scheduleType.Equals("monthly"))
-				employee.Schedule = new MonthlySchedule();
-		}
+            CreateEmplyee(row);
+            AddSchedule(row);
+            AddPaymentMethod(row);
+            AddClassification(row);
+        }
 
-		private void AddPaymentMethod(DataRow row)
-		{
-			string methodCode = row["PaymentMethodType"].ToString();
-			LoadPaymentMethodOperation operation = new LoadPaymentMethodOperation(employee, methodCode, connection);
-			operation.Execute();
-			employee.Method = operation.Method;
-		}
+        public void AddSchedule(DataRow row)
+        {
+            var scheduleType = row["ScheduleType"].ToString();
+            if (scheduleType.Equals("weekly"))
+            {
+                Employee.Schedule = new WeeklySchedule();
+            }
+            else if (scheduleType.Equals("biweekly"))
+            {
+                Employee.Schedule = new BiWeeklySchedule();
+            }
+            else if (scheduleType.Equals("monthly"))
+            {
+                Employee.Schedule = new MonthlySchedule();
+            }
+        }
 
-		private void AddClassification(DataRow row)
-		{
-			string classificationCode = row["PaymentClassificationType"].ToString();
-			LoadPaymentClassificationOperation operation = new LoadPaymentClassificationOperation(employee, classificationCode, connection);
-			operation.Execute();
-			employee.Classification = operation.Classification;
-		}
+        public void CreateEmplyee(DataRow row)
+        {
+            var name = row["Name"].ToString();
+            var address = row["Address"].ToString();
+            Employee = new Employee(empId, name, address);
+        }
 
-		public void CreateEmplyee(DataRow row)
-		{
-			string name = row["Name"].ToString();
-			string address = row["Address"].ToString();
-			employee = new Employee(empId, name, address);
-		}
+        public static DataRow LoadDataFromCommand(SqlCommand command)
+        {
+            var adapter = new SqlDataAdapter(command);
+            var dataset = new DataSet();
+            adapter.Fill(dataset);
+            var table = dataset.Tables["table"];
+            return table.Rows[0];
+        }
 
-		public static DataRow LoadDataFromCommand(SqlCommand command)
-		{
-			SqlDataAdapter adapter = new SqlDataAdapter(command);
-			DataSet dataset = new DataSet();
-			adapter.Fill(dataset);
-			DataTable table = dataset.Tables["table"];
-			return table.Rows[0];
-		}
+        private void AddPaymentMethod(DataRow row)
+        {
+            var methodCode = row["PaymentMethodType"].ToString();
+            var operation = new LoadPaymentMethodOperation(Employee, methodCode, connection);
+            operation.Execute();
+            Employee.Method = operation.Method;
+        }
 
-		public Employee Employee
-		{
-			get { return employee; }
-			set { employee = value; }
-		}
-	}
+        private void AddClassification(DataRow row)
+        {
+            var classificationCode = row["PaymentClassificationType"].ToString();
+            var operation = new LoadPaymentClassificationOperation(Employee, classificationCode, connection);
+            operation.Execute();
+            Employee.Classification = operation.Classification;
+        }
+    }
 }

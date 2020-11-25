@@ -3,33 +3,31 @@ using Payroll;
 
 namespace PayrollUI
 {
-	public class TransactionContainer
-	{
-		public delegate void AddAction();
+    public class TransactionContainer
+    {
+        public delegate void AddAction();
 
-		private IList transactions = new ArrayList();
-		private AddAction addAction;
+        private readonly AddAction addAction;
 
-		public TransactionContainer(AddAction action)
-		{
-			addAction = action;
-		}
+        public IList Transactions { get; } = new ArrayList();
 
-		public IList Transactions
-		{
-			get { return transactions; }
-		}
+        public TransactionContainer(AddAction action)
+        {
+            addAction = action;
+        }
 
-		public void Add(Transaction transaction)
-		{
-			transactions.Add(transaction);
-			if(addAction != null)
-				addAction();
-		}
+        public void Add(Transaction transaction)
+        {
+            Transactions.Add(transaction);
+            if (addAction != null)
+            {
+                addAction();
+            }
+        }
 
-		public void Clear()
-		{
-			transactions.Clear();
-		}
-	}
+        public void Clear()
+        {
+            Transactions.Clear();
+        }
+    }
 }

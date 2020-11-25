@@ -1,50 +1,49 @@
-using System.Windows.Forms;
 using NUnit.Framework;
 using Payroll;
 
 namespace PayrollUI
 {
-	[TestFixture]
-	public class WindowViewLoaderTest
-	{
-		private PayrollDatabase database;
-		private WindowViewLoader viewLoader;
+    [TestFixture]
+    public class WindowViewLoaderTest
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            database = new InMemoryPayrollDatabase();
+            viewLoader = new WindowViewLoader(database);
+        }
 
-		[SetUp]
-		public void SetUp()
-		{
-			database = new InMemoryPayrollDatabase();
-			viewLoader = new WindowViewLoader(database);
-		}
+        private PayrollDatabase database;
+        private WindowViewLoader viewLoader;
 
-		[Test]
-		public void LoadPayrollView()
-		{
-			viewLoader.LoadPayrollView();
+        [Test]
+        public void LoadAddEmployeeView()
+        {
+            viewLoader.LoadAddEmployeeView(
+                new TransactionContainer(null));
 
-			Form form = viewLoader.LastLoadedView;
-			Assert.IsTrue(form is PayrollWindow);
-			Assert.IsTrue(form.Visible);
+            var form = viewLoader.LastLoadedView;
+            Assert.IsTrue(form is AddEmployeeWindow);
+            Assert.IsTrue(form.Visible);
 
-			PayrollWindow payrollWindow = form as PayrollWindow;
-			PayrollPresenter presenter = payrollWindow.Presenter;
-			Assert.IsNotNull(presenter);
-			Assert.AreSame(form, presenter.View);
-		}
+            var addEmployeeWindow =
+                form as AddEmployeeWindow;
+            Assert.IsNotNull(addEmployeeWindow.Presenter);
+        }
 
-		[Test]
-		public void LoadAddEmployeeView()
-		{
-			viewLoader.LoadAddEmployeeView(
-				new TransactionContainer(null));
+        [Test]
+        public void LoadPayrollView()
+        {
+            viewLoader.LoadPayrollView();
 
-			Form form = viewLoader.LastLoadedView;
-			Assert.IsTrue(form is AddEmployeeWindow);
-			Assert.IsTrue(form.Visible);
+            var form = viewLoader.LastLoadedView;
+            Assert.IsTrue(form is PayrollWindow);
+            Assert.IsTrue(form.Visible);
 
-			AddEmployeeWindow addEmployeeWindow = 
-				form as AddEmployeeWindow;
-			Assert.IsNotNull(addEmployeeWindow.Presenter);
-		}
-	}
+            var payrollWindow = form as PayrollWindow;
+            var presenter = payrollWindow.Presenter;
+            Assert.IsNotNull(presenter);
+            Assert.AreSame(form, presenter.View);
+        }
+    }
 }

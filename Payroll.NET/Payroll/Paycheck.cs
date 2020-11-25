@@ -3,62 +3,36 @@ using System.Collections;
 
 namespace Payroll
 {
-	public class Paycheck
-	{
-		private DateTime payDate;
-		private readonly DateTime payPeriodStartDate;
-		private double grossPay;
-		private Hashtable fields = new Hashtable();
-		private double deductions;
-		private double netPay;
+    public class Paycheck
+    {
+        private readonly Hashtable fields = new Hashtable();
 
-		public Paycheck(DateTime payPeriodStartDate, DateTime payDate)
-		{
-			this.payDate = payDate;
-			this.payPeriodStartDate = payPeriodStartDate;
-		}
+        public DateTime PayDate { get; }
 
-		public DateTime PayDate
-		{
-			get { return payDate; }
-		}
+        public double GrossPay { get; set; }
 
-		public double GrossPay
-		{
-			get { return grossPay; }
-			set { grossPay = value; }
-		}
+        public double Deductions { get; set; }
 
-		public void SetField(string fieldName, string value)
-		{
-			fields[fieldName] = value;
-		}
+        public double NetPay { get; set; }
 
-		public string GetField(string fieldName)
-		{
-			return fields[fieldName] as string;
-		}
+        public DateTime PayPeriodEndDate => PayDate;
 
-		public double Deductions
-		{
-			get { return deductions; }
-			set { deductions = value; }
-		}
+        public DateTime PayPeriodStartDate { get; }
 
-		public double NetPay
-		{
-			get { return netPay; }
-			set { netPay = value; }
-		}
+        public Paycheck(DateTime payPeriodStartDate, DateTime payDate)
+        {
+            PayDate = payDate;
+            PayPeriodStartDate = payPeriodStartDate;
+        }
 
-		public DateTime PayPeriodEndDate
-		{
-			get { return payDate; }
-		}
+        public void SetField(string fieldName, string value)
+        {
+            fields[fieldName] = value;
+        }
 
-		public DateTime PayPeriodStartDate
-		{
-			get { return payPeriodStartDate; }
-		}
-	}
+        public string GetField(string fieldName)
+        {
+            return fields[fieldName] as string;
+        }
+    }
 }

@@ -1,11 +1,11 @@
 namespace PayrollUI
 {
-	public interface PayrollView
-	{
-		string TransactionsText { set; }
+    public interface PayrollView
+    {
+        string TransactionsText { set; }
 
-		string EmployeesText { set; }
+        string EmployeesText { set; }
 
-		PayrollPresenter Presenter { set; }
-	}
+        PayrollPresenter Presenter { set; }
+    }
 }
